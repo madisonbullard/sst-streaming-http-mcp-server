@@ -1,16 +1,17 @@
 {
 	"name": "streaming-http-mcp-server-lambda",
 	"type": "module",
+	"version": "0.0.0",
 	"private": true,
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
 		"@tsconfig/node22": "22.0.1",
 		"@types/aws-lambda": "8.10.149",
-		"@types/bun": "1.2.10",
+		"@types/bun": "1.2.12",
 		"typescript": "5.8.3"
 	},
 	"dependencies": {
-		"sst": "3.14.11"
+		"sst": "3.14.12"
 	},
 	"scripts": {
 		"typecheck": "bun --elide-lines 0 --filter=* typecheck",
