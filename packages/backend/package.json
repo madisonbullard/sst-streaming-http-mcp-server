@@ -1,11 +1,14 @@
 {
-	"name": "function",
+	"name": "backend",
 	"type": "module",
 	"private": true,
-	"devDependencies": {
-		"@types/bun": "latest"
+	"scripts": {
+		"mcp": "npx @modelcontextprotocol/inspector"
 	},
-	"peerDependencies": {
-		"typescript": "^5"
+	"dependencies": {
+		"@modelcontextprotocol/sdk": "^1.11.0",
+		"fetch-to-node": "^2.1.0",
+		"hono": "^4.7.8",
+		"zod": "^3.24.4"
 	}
 }

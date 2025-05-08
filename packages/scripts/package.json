@@ -1,0 +1,19 @@
+{
+	"name": "@streaming-http-mcp-server-lambda/scripts",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"packageManager": "bun@1.2.12",
+	"type": "module",
+	"scripts": {
+		"mcp-inspect": "sst shell bun src/mcp-inspect.ts",
+		"typecheck": "tsc --noEmit"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@types/node": "22.14.1",
+		"tsx": "4.19.3"
+	}
+}

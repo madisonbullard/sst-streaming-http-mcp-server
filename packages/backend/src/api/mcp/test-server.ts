@@ -1,9 +1,13 @@
 import { randomUUID } from "node:crypto";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
-import { isInitializeRequest } from "@modelcontextprotocol/sdk/types.js";
+import {
+	type CallToolResult,
+	isInitializeRequest,
+} from "@modelcontextprotocol/sdk/types.js";
 import { toFetchResponse, toReqRes } from "fetch-to-node";
 import { type Context, Hono } from "hono";
+import { z } from "zod";
 import { McpErrorCodes } from "./common";
 
 // Map to store transports by session ID
@@ -48,7 +52,56 @@ export namespace TestServerApi {
 				},
 				{ capabilities: { logging: {} } },
 			);
-			// ... set up server resources, tools, and prompts ...
+
+			// Register a tool specifically for testing resumability
+			server.tool(
+				"start-notification-stream",
+				"Starts sending periodic notifications for testing resumability",
+				{
+					interval: z
+						.number()
+						.describe("Interval in milliseconds between notifications")
+						.default(100),
+					count: z
+						.number()
+						.describe("Number of notifications to send (0 for 100)")
+						.default(10),
+				},
+				async (
+					{ interval, count },
+					{ sendNotification },
+				): Promise<CallToolResult> => {
+					const sleep = (ms: number) =>
+						new Promise((resolve) => setTimeout(resolve, ms));
+					let counter = 0;
+
+					while (count === 0 || counter < count) {
+						counter++;
+						try {
+							await sendNotification({
+								method: "notifications/message",
+								params: {
+									level: "info",
+									data: `Periodic notification #${counter} at ${new Date().toISOString()}`,
+								},
+							});
+						} catch (error) {
+							console.error("Error sending notification:", error);
+						}
+						// Wait for the specified interval
+						await sleep(interval);
+					}
+
+					return {
+						content: [
+							{
+								type: "text",
+								text: `Started sending periodic notifications every ${interval}ms`,
+							},
+						],
+					};
+				},
+			);
 
 			try {
 				// Connect to the MCP server

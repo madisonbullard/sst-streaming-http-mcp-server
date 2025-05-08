@@ -1,10 +1,10 @@
-import { OpenAPIHono } from "@hono/zod-openapi";
+import { Hono } from "hono";
 import { handle, streamHandle } from "hono/aws-lambda";
 import { compress } from "hono/compress";
 import { logger } from "hono/logger";
-import { McpRoutes } from "../function/mcp";
+import { McpRoutes } from "../api/mcp";
 
-const app = new OpenAPIHono();
+const app = new Hono();
 app.use("*", logger());
 app.use("*", compress());
 app.use("*", async (c, next) => {
@@ -13,21 +13,6 @@ app.use("*", async (c, next) => {
 		c.header("cache-control", "no-store, max-age=0, must-revalidate, no-cache");
 	}
 });
-
-app.openAPIRegistry.registerComponent("securitySchemes", "Bearer", {
-	type: "http",
-	bearerFormat: "JWT",
-	scheme: "bearer",
-});
-
-app.doc("/doc", (c) => ({
-	openapi: "3.0.0",
-	info: {
-		title: "remote-mcp API",
-		version: "0.0.1",
-	},
-	servers: [{ url: new URL(c.req.url).origin }],
-}));
 
 const routes = app.route("/mcp", McpRoutes);
 
