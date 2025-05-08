@@ -1,5 +1,5 @@
 {
-	"name": "@streaming-http-mcp-server-lambda/backend",
+	"name": "@sst-streaming-http-mcp-server/backend",
 	"type": "module",
 	"private": true,
 	"scripts": {

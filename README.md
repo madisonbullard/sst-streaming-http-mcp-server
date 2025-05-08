@@ -1,4 +1,4 @@
-# streaming-http-mcp-server-lambda
+# sst-streaming-http-mcp-server
 This is an SST monorepo that deploys an AWS Lambda and Cloudfront distribution for MCP streaming HTTP servers. Currently this doesn't include auth.
 
 ## Setup

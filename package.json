@@ -1,5 +1,5 @@
 {
-	"name": "streaming-http-mcp-server-lambda",
+	"name": "sst-streaming-http-mcp-server",
 	"type": "module",
 	"version": "0.0.0",
 	"private": true,

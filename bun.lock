@@ -2,7 +2,7 @@
   "lockfileVersion": 1,
   "workspaces": {
     "": {
-      "name": "streaming-http-mcp-server-lambda",
+      "name": "sst-streaming-http-mcp-server",
       "dependencies": {
         "sst": "3.14.12",
       },
@@ -15,7 +15,7 @@
       },
     },
     "packages/backend": {
-      "name": "@streaming-http-mcp-server-lambda/backend",
+      "name": "@sst-streaming-http-mcp-server/backend",
       "dependencies": {
         "@modelcontextprotocol/sdk": "1.11.1",
         "fetch-to-node": "2.1.0",
@@ -49,7 +49,7 @@
 
     "@modelcontextprotocol/sdk": ["@modelcontextprotocol/sdk@1.11.1", "", { "dependencies": { "content-type": "^1.0.5", "cors": "^2.8.5", "cross-spawn": "^7.0.3", "eventsource": "^3.0.2", "express": "^5.0.1", "express-rate-limit": "^7.5.0", "pkce-challenge": "^5.0.0", "raw-body": "^3.0.0", "zod": "^3.23.8", "zod-to-json-schema": "^3.24.1" } }, "sha512-9LfmxKTb1v+vUS1/emSk1f5ePmTLkb9Le9AxOB5T0XM59EUumwcS45z05h7aiZx3GI0Bl7mjb3FMEglYj+acuQ=="],
 
-    "@streaming-http-mcp-server-lambda/backend": ["@streaming-http-mcp-server-lambda/backend@workspace:packages/backend"],
+    "@sst-streaming-http-mcp-server/backend": ["@sst-streaming-http-mcp-server/backend@workspace:packages/backend"],
 
     "@tsconfig/bun": ["@tsconfig/bun@1.0.7", "", {}, "sha512-udGrGJBNQdXGVulehc1aWT73wkR9wdaGBtB6yL70RJsqwW/yJhIg6ZbRlPOfIUiFNrnBuYLBi9CSmMKfDC7dvA=="],
 
