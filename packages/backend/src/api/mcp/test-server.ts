@@ -1,7 +1,8 @@
+import { isInitializeRequest } from "@modelcontextprotocol/sdk/types.js";
 import { toFetchResponse, toReqRes } from "fetch-to-node";
 import { type Context, Hono } from "hono";
-import { handler } from "../../mcp/handler";
 import { server as testServer } from "../../mcp/servers/test-server";
+import { getOrCreateTransport } from "../../mcp/transport";
 
 export namespace TestServerApi {
 	export const route = new Hono();
@@ -13,10 +14,10 @@ export namespace TestServerApi {
 		const headers = c.req.header();
 		const sessionId = headers["mcp-session-id"] as string | undefined;
 
-		const transport = await handler({
+		const transport = await getOrCreateTransport({
 			sessionId,
 			server: testServer,
-			reqParsedJson: await c.req.json(),
+			isInitializeRequest: isInitializeRequest(await c.req.json()),
 		});
 
 		res.on("close", () => {
@@ -37,10 +38,9 @@ export namespace TestServerApi {
 		const headers = c.req.header();
 		const sessionId = headers["mcp-session-id"] as string | undefined;
 
-		const transport = await handler({
+		const transport = await getOrCreateTransport({
 			sessionId,
 			server: testServer,
-			reqParsedJson: await c.req.json(),
 		});
 
 		res.on("close", () => {
