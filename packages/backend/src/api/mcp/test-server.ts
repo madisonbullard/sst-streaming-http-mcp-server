@@ -28,7 +28,7 @@ export namespace TestServerApi {
 		if (sessionId && transports[sessionId]) {
 			// Reuse existing transport
 			transport = transports[sessionId];
-		} else if (!sessionId && isInitializeRequest(req)) {
+		} else if (!sessionId && isInitializeRequest(await c.req.json())) {
 			// New initialization request
 			transport = new StreamableHTTPServerTransport({
 				sessionIdGenerator: () => randomUUID(),
@@ -50,7 +50,7 @@ export namespace TestServerApi {
 					name: "example-server",
 					version: "1.0.0",
 				},
-				{ capabilities: { logging: {} } },
+				{ capabilities: { logging: {}, tools: {} } },
 			);
 
 			// Register a tool specifically for testing resumability
@@ -110,16 +110,11 @@ export namespace TestServerApi {
 				// Added for extra debuggability
 				transport.onerror = console.error.bind(console);
 
-				// Handle the request
-				await transport.handleRequest(req, res, await c.req.json());
-
 				res.on("close", () => {
 					console.log("Request closed");
 					transport.close();
 					server.close();
 				});
-
-				return toFetchResponse(res);
 			} catch (error) {
 				console.error(error);
 				return c.json(
@@ -136,6 +131,7 @@ export namespace TestServerApi {
 			}
 		} else {
 			// Invalid request
+			console.error(req);
 			return c.json(
 				{
 					jsonrpc: "2.0",
@@ -148,6 +144,11 @@ export namespace TestServerApi {
 				400,
 			);
 		}
+
+		// Handle the request
+		await transport.handleRequest(req, res, await c.req.json());
+
+		return toFetchResponse(res);
 	});
 
 	// Reusable handler for GET and DELETE requests
