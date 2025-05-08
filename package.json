@@ -1,0 +1,35 @@
+{
+	"name": "streaming-http-mcp-server-lambda",
+	"type": "module",
+	"private": true,
+	"devDependencies": {
+		"@biomejs/biome": "1.9.4",
+		"@tsconfig/node22": "22.0.1",
+		"@types/aws-lambda": "8.10.149",
+		"@types/bun": "1.2.10",
+		"typescript": "5.8.3"
+	},
+	"dependencies": {
+		"@hono/zod-openapi": "^0.19.6",
+		"@modelcontextprotocol/sdk": "^1.11.0",
+		"fetch-to-node": "^2.1.0",
+		"hono": "^4.7.8",
+		"sst": "3.14.11"
+	},
+	"scripts": {
+		"typecheck": "bun --elide-lines 0 --filter=* typecheck",
+		"check": "bun biome check",
+		"fix": "bun check --write ./",
+		"dev": "sst dev --stage dev",
+		"sso": "source .env && aws sso login --sso-session=${AWS_SSO_SESSION}",
+		"deploy": "bun sst deploy"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"workspaces": ["packages/*"],
+	"engines": {
+		"node": ">=22.0.0"
+	},
+	"trustedDependencies": ["@biomejs/biome"]
+}
