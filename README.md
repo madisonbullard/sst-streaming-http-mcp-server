@@ -2,6 +2,7 @@
 This is an SST monorepo that deploys an AWS Lambda and Cloudfront distribution for MCP streaming HTTP servers. Currently this doesn't include auth.
 
 ## Setup
+- Recommended: Follow the [SST guide](https://sst.dev/docs/aws-accounts/) to set up your AWS org/accounts
 - Use `.env.example` to create your own `.env` file
 - `bun install`
 - `bun dev` to launch SST dev mode
